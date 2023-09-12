@@ -31,6 +31,22 @@ This project is a chatbot that assists users in managing their loans. It provide
     python run_chatbot.py
     ```
 
+## Test CSV
+
+For testing the performance of the chatbot, a CSV file is used. The CSV file should have its structure such as the following example:
+
+| query | real_response | off_topic |
+|-------|---------------|-----------|
+| What is the current status of my loan application? | Approved | FALSE |
+| Are there any specific documents needed for self-employed individuals? | OFF | TRUE |
+| What is the interest rate for this loan? | 2.8750 | FALSE |
+
+- `query`: This column contains the questions or queries that will be passed to the chatbot.
+- `real_response`: This column contains the expected response from the chatbot. If the query is off-topic (i.e., not related to loan management), the expected response should be 'OFF'.
+- `off_topic`: This column indicates whether the query is off-topic. It should be 'TRUE' if the query is off-topic and 'FALSE' otherwise.
+
+Save this file in the `./tests` directory with a `.csv` extension (e.g., `tester_clutch.csv`). You can then use this file for testing the performance of the chatbot by running the `performance.py` script.
+
 ## Testing
 
 1. Run the performance pipeline:
