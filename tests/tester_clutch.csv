@@ -1,0 +1,4 @@
+query,real_response,off_topic
+What is the current status of my loan application?,Approved,FALSE
+Are there any specific documents needed for self-employed individuals?,OFF,TRUE
+What is the interest rate for this loan?,2.8750,FALSE

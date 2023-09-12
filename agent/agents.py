@@ -80,7 +80,7 @@ class Agent:
             # Return a JSON object indicating that the query was off topic
             return {
                 'query': self.chat_history[0]['content'],
-                'response': 'N/A',
+                'response': 'NA',
                 'off_topic': True
             }
         elif finish_reason == 'function_call':
@@ -92,7 +92,10 @@ class Agent:
                 self.chat_history + self.internal_thoughts + extractor_prompt
             )
 
-            json_output = json.loads(performance_res['choices'][0]['message']['content'].replace("'", "\""))
+            try:
+                json_output = json.loads(performance_res['choices'][0]['message']['content'].replace("'", "\""))
+            except:
+                json_output = {'result': 'OFF'}
 
             final_result = json_output[next(iter(json_output))]
 
