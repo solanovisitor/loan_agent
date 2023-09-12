@@ -50,15 +50,13 @@ This project is a chatbot that assists users in managing their loans. It provide
 
 ## To-Do
 
-| Task | Description | Status |
-| --- | --- | --- |
-| Prompt improvements to user-faced Gradio application | Improve the user interface and experience of the Gradio application. | Pending |
-| Integrate the function to a database | Instead of relying solely on XML inputs, integrate the function with a database to fetch user data. | Pending |
-| Add more functions | Add functions to calculate different parameters related to loans. | Pending |
-| Implement Vectorstore | Use Vectorstore to align the chatbot's responses with the company's guidelines. | Pending |
-| Improve performance pipeline | Make the performance pipeline calls run in parallel to improve speed. | Pending |
-| Improve error handling | Implement better error handling and logging throughout the application. | Pending |
-| Add user authentication | Implement user authentication to ensure data security and privacy. | Pending |
-| Implement multi-language support | Add support for multiple languages to make the chatbot more accessible. | Pending |
-| Add more tests | Write more comprehensive tests for the chatbot to ensure its reliability and accuracy. | Pending |
-| Improve documentation | Update and improve the project's documentation, including the README and code comments. | Pending |
+| Task | Description |
+| --- | --- |
+| Prompt improvements to user-faced Gradio application | Improve the user interface and experience of the Gradio application. |
+| Integrate the function to a database | Instead of relying solely on XML inputs, integrate the function with a database to fetch user data. |
+| Add more functions | Add functions to calculate different parameters related to loans. |
+| Implement Vectorstore | Use Vectorstore to align the chatbot's responses with the company's guidelines. |
+| Concurrent performance calls | Make the performance pipeline calls run in parallel to improve speed. |
+| Improve error handling | Implement better error handling and logging throughout the application. |
+| Add more tests | Write more comprehensive tests for the chatbot to ensure its reliability and accuracy. |
+| Improve documentation | Update and improve the project's documentation, including the README and code comments. |
