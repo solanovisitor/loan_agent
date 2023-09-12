@@ -20,7 +20,7 @@ class Agent:
     def __init__(
         self,
         openai_api_key: str,
-        model_name: str = 'gpt-4-0613',
+        model_name: str = 'gpt-4',
         functions: Optional[list] = None
     ):
         openai.api_key = openai_api_key
@@ -65,23 +65,23 @@ class Agent:
 
             if finish_reason == 'stop' or len(self.internal_thoughts) > 3:
                 # create the final answer
-                final_thought = self._final_thought_answer()
-                final_res = self._create_chat_completion(
-                    self.chat_history + [final_thought],
-                    use_functions=False
-                )
-                return final_res
+                # final_thought = self._final_thought_answer()
+                # final_res = self._create_chat_completion(
+                #     messages = self.chat_history + [final_thought],
+                #     use_functions=False
+                # )
+                return res
             elif finish_reason == 'function_call':
                 self._handle_function_call(res)
             else:
                 raise ValueError(f"Unexpected finish reason: {finish_reason}")
 
     def _handle_function_call(self, res: openai.ChatCompletion):
-        self.internal_thoughts.append(res.choices[0].message.to_dict())
+        # self.internal_thoughts.append(res.choices[0].message.to_dict())
         func_name = res.choices[0].message.function_call.name
         args_str = res.choices[0].message.function_call.arguments
         result = self._call_function(func_name, args_str)
-        res_msg = {'role': 'assistant', 'content': (f"The answer is {result}.")}
+        res_msg = {'role': 'assistant', 'content': (f"The loan information from the user is the following: {result}.")}
         self.internal_thoughts.append(res_msg)
 
     def _call_function(self, func_name: str, args_str: str):
@@ -90,23 +90,17 @@ class Agent:
         logger.info(f"Args: {args}")
         func = self.func_mapping[func_name]
         logger.info(f"Function object: {func}")
-        res = func(**args)
+        res = func()
         return res
 
     def _final_thought_answer(self):
-        thoughts = ("To answer the question I will use these step by step instructions."
-                    "\n\n")
+        thoughts = ""
         for thought in self.internal_thoughts:
-            if 'function_call' in thought.keys():
-                thoughts += (f"I will use the {thought['function_call']['name']} "
-                             "function to calculate the answer with arguments "
-                             + thought['function_call']['arguments'] + ".\n\n")
-            else:
                 thoughts += thought["content"] + "\n\n"
         self.final_thought = {
             'role': 'assistant',
-            'content': (f"{thoughts} Based on the above, I will now answer the "
-                        "question, this message will only be seen by me so answer with "
+            'content': (f"{thoughts}Based on the above information from the user's loan, I will now answer the"
+                        "question. This message will only be seen by me so answer with "
                         "the assumption with that the user has not seen this message.")
         }
         logger.info(f'** Thought **:\n\n{self.final_thought}\n')
@@ -116,5 +110,5 @@ class Agent:
         self.internal_thoughts = []
         self.chat_history.append({'role': 'user', 'content': query})
         res = self._generate_response()
-        self.chat_history.append({'role': 'assistant', 'content': res.choices[0].message.to_dict()})
+        self.chat_history.append(res.choices[0].message.to_dict())
         return res
