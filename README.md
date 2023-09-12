@@ -7,6 +7,7 @@ This project is a chatbot that assists users in managing their loans. It provide
 - [Installation](#installation)
 - [Usage](#usage)
 - [Testing](#testing)
+- [To-Do] (#todo)
 
 ## Installation
 
@@ -46,3 +47,18 @@ This project is a chatbot that assists users in managing their loans. It provide
 - `loan_agent.py`: Contains the `LoanAgent` class that reads loan parameters from an XML file and interacts with the `Agent` class.
 - `run_chatbot.py`: Script to run the chatbot with hot-reloading enabled.
 - `performance.py`: Script to test the performance of the chatbot.
+
+## To-Do
+
+| Task | Description | Status |
+| --- | --- | --- |
+| Prompt improvements to user-faced Gradio application | Improve the user interface and experience of the Gradio application. | Pending |
+| Integrate the function to a database | Instead of relying solely on XML inputs, integrate the function with a database to fetch user data. | Pending |
+| Add more functions | Add functions to calculate different parameters related to loans. | Pending |
+| Implement Vectorstore | Use Vectorstore to align the chatbot's responses with the company's guidelines. | Pending |
+| Improve performance pipeline | Make the performance pipeline calls run in parallel to improve speed. | Pending |
+| Improve error handling | Implement better error handling and logging throughout the application. | Pending |
+| Add user authentication | Implement user authentication to ensure data security and privacy. | Pending |
+| Implement multi-language support | Add support for multiple languages to make the chatbot more accessible. | Pending |
+| Add more tests | Write more comprehensive tests for the chatbot to ensure its reliability and accuracy. | Pending |
+| Improve documentation | Update and improve the project's documentation, including the README and code comments. | Pending |
