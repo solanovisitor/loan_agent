@@ -64,20 +64,44 @@ class Agent:
             finish_reason = res.choices[0].finish_reason
 
             if finish_reason == 'stop' or len(self.internal_thoughts) > 3:
-                # create the final answer
-                # final_thought = self._final_thought_answer()
-                # final_res = self._create_chat_completion(
-                #     messages = self.chat_history + [final_thought],
-                #     use_functions=False
-                # )
                 return res
             elif finish_reason == 'function_call':
                 self._handle_function_call(res)
             else:
                 raise ValueError(f"Unexpected finish reason: {finish_reason}")
+            
+    def _generate_response_performance(self) -> dict:
+        res = self._create_chat_completion(
+            self.chat_history + self.internal_thoughts
+        )
+        finish_reason = res.choices[0].finish_reason
+
+        if finish_reason == 'stop':
+            # Return a JSON object indicating that the query was off topic
+            return {
+                'query': self.chat_history[0]['content'],
+                'response': 'N/A',
+                'off_topic': True
+            }
+        elif finish_reason == 'function_call':
+            self._handle_function_call(res)
+
+            performance_res = self._create_chat_completion(
+                self.chat_history + self.internal_thoughts + ["\n\nNow, output the desired parameter only, in a JSON object like this one:\n\n{'result': '4500'}"]
+            )
+
+            final_result = json.loads(performance_res)['result']
+
+            # Return a JSON object with the result
+            return {
+                'query': self.chat_history[0]['content'],
+                'response': final_result,
+                'off_topic': False
+            }
+        else:
+            raise ValueError(f"Unexpected finish reason: {finish_reason}")
 
     def _handle_function_call(self, res: openai.ChatCompletion):
-        # self.internal_thoughts.append(res.choices[0].message.to_dict())
         func_name = res.choices[0].message.function_call.name
         args_str = res.choices[0].message.function_call.arguments
         result = self._call_function(func_name, args_str)
@@ -111,4 +135,10 @@ class Agent:
         self.chat_history.append({'role': 'user', 'content': query})
         res = self._generate_response()
         self.chat_history.append(res.choices[0].message.to_dict())
+        return res
+    
+    def ask_performance(self, query: str) -> dict:
+        self.internal_thoughts = []
+        self.chat_history.append({'role': 'user', 'content': query})
+        res = self._generate_response_performance()
         return res
