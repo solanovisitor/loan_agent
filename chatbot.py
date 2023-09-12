@@ -10,7 +10,6 @@ logger = logging.getLogger(__name__)
 # load environment variables from .env.list
 load_dotenv('.env.list')
 
-# Now you can access the variables using os.environ
 openai_api_key = os.getenv('OPENAI_API_KEY')
 
 def handle_upload(file):
@@ -25,7 +24,7 @@ def handle_upload(file):
 def get_response(message, history, file_upload):
     handle_upload(file_upload)
     logger.info(f'Chat history: {history}')
-    # Get raw chat response
+
     res = loan_agent.ask(message)
 
     chat_response = res['choices'][0]['message']['content']
