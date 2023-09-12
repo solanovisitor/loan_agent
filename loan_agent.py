@@ -22,8 +22,10 @@ class LoanAgent:
     def read_loan_parameters_from_xml(self) -> dict:
         """Read loan parameters from an XML file and return them as a dictionary.
 
-        This method parses an XML file to fetch parameters like loan stage and status,
-        collateral information, loan decision, rates, and terms.
+        This method parses an XML file to fetch
+        loan status, rates, terms and monthly payments.
+
+        Do not use this function if the inquiry from the user does not include any of these parameters.
 
         :param file_path: Path to the XML file containing loan parameters.
         :return: Dictionary containing loan parameters.

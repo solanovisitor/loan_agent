@@ -13,11 +13,6 @@ load_dotenv('.env.list')
 # Now you can access the variables using os.environ
 openai_api_key = os.getenv('OPENAI_API_KEY')
 
-# Instantiate FitnessAgent here so it remains open
-# loan_agent = LoanAgent(openai_api_key, '/Users/solanotodes/Documents/loan_agent/counter_3_stips.xml')
-
-# history = loan_agent.chat_history
-
 def handle_upload(file):
     global loan_agent
     global history
