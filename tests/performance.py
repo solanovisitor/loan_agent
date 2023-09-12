@@ -56,7 +56,7 @@ def performance_pipeline(csv_file_path: str, agent: LoanAgent) -> pd.DataFrame:
             df_temp['generated_response'] = generated_outputs
             df_temp['generated_off_topic'] = off_topics
             df_temp['match'] = matches
-            df_temp.to_csv('intermediate_results.csv', index=False)
+            df_temp.to_csv('./tests/intermediate_results.csv', index=False)
 
         except Exception as e:
             logger.error(f"Error at index {index}: {e}")
