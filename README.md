@@ -7,7 +7,7 @@ This project is a chatbot that assists users in managing their loans. It provide
 - [Installation](#installation)
 - [Usage](#usage)
 - [Testing](#testing)
-- [To-Do](#todo)
+- [To-Do](#to-do)
 
 ## Installation
 
