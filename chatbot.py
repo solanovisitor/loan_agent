@@ -34,6 +34,11 @@ def get_response(message, history, file_upload):
 def main():
 
     with gr.Blocks() as chat:
+        gr.Markdown(
+                    """
+                    # Loan Agent
+                    Input the XML file with loan information below and start chatting.
+                    """)
         file_upload = gr.File(file_types=['.xml'])
         gr.ChatInterface(
             fn=get_response,
