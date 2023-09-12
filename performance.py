@@ -19,8 +19,9 @@ def performance_pipeline(csv_file_path: str, agent: LoanAgent) -> pd.DataFrame:
     df = pd.read_csv(csv_file_path)
 
     # Initialize lists to store the generated responses and whether they match the real ones
-    generated_responses = []
+    generated_outputs = []
     matches = []
+    off_topics = []
 
     # Iterate over the rows of the DataFrame
     for index, row in df.iterrows():
@@ -32,14 +33,16 @@ def performance_pipeline(csv_file_path: str, agent: LoanAgent) -> pd.DataFrame:
         generated_response = agent.ask_performance(query)
 
         # Store the generated response
-        generated_responses.append(generated_response)
+        generated_outputs.append(generated_response['response'])
 
         # Check if the generated response matches the real one
         matches.append(generated_response == real_response)
 
+        off_topics.append(generated_response['off_topic'])
+
     # Add the generated responses and matches to the DataFrame
-    df['generated_response'] = generated_responses['response']
-    df['generated_off_topic'] = generated_responses['off_topic']
+    df['generated_response'] = generated_outputs
+    df['generated_off_topic'] = off_topics
     df['match'] = matches
 
     # Calculate and print the classification metrics for the 'off_topic' column
