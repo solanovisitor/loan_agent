@@ -89,6 +89,10 @@ class LoanAgent:
     def ask(self, question: str):
         response = self.agent.ask(question)
         return response
+    
+    def ask_performance(self, question: str):
+        response = self.agent.ask_performance(question)
+        return response
 
     def view_functions(self):
         return self.agent.functions

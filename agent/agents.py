@@ -86,15 +86,19 @@ class Agent:
         elif finish_reason == 'function_call':
             self._handle_function_call(res)
 
+            extractor_prompt = [{"role": "assistant", "content": "\n\nNow, output only the parameter demanded from the user in his query.\n\nRespond below in a JSON object with the key 'result', such as the following example:\n\n{'result': '4500'}"}]
+
             performance_res = self._create_chat_completion(
-                self.chat_history + self.internal_thoughts + ["\n\nNow, output the desired parameter only, in a JSON object like this one:\n\n{'result': '4500'}"]
+                self.chat_history + self.internal_thoughts + extractor_prompt
             )
 
-            final_result = json.loads(performance_res)['result']
+            json_output = json.loads(performance_res['choices'][0]['message']['content'].replace("'", "\""))
+
+            final_result = json_output[next(iter(json_output))]
 
             # Return a JSON object with the result
             return {
-                'query': self.chat_history[0]['content'],
+                'query': self.chat_history[1]['content'],
                 'response': final_result,
                 'off_topic': False
             }
